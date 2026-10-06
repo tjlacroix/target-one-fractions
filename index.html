@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Target One</title>
+<style>
+:root{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#203b3b;background:#f6f3e9;font-synthesis:none}*{box-sizing:border-box}body{margin:0}button,select{font:inherit}button{cursor:pointer}button:focus-visible,select:focus-visible{outline:3px solid #b64718;outline-offset:4px}main{max-width:900px;margin:auto;padding:32px 24px}header{display:flex;align-items:center;justify-content:space-between;gap:16px}.eyebrow{font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;font-weight:800;color:#526865}h1{font-size:clamp(2.5rem,7vw,4rem);letter-spacing:-.055em;margin:4px 0}p{line-height:1.6}.target{background:#203b3b;color:#fff;padding:14px 24px;border-radius:22px;text-align:center}.target span{display:block;font-size:.7rem;letter-spacing:.13em}.target strong{font-size:2.8rem;line-height:1.1}.intro{max-width:600px;margin:16px 0 24px}.board{background:#fffdf7;border:1px solid #deded0;border-radius:28px;padding:28px;box-shadow:0 12px 35px #203b3b08}h2{font-size:1.1rem;margin:0}.hint{color:#526865;font-size:.9rem;margin:8px 0 20px}.expression{display:flex;align-items:center;justify-content:center;gap:22px;margin:28px 0}.fraction{display:grid;gap:10px}.bar{height:3px;background:#203b3b;border-radius:2px}.times{font-size:2rem}.slot{width:130px;min-height:112px;background:#f4f5ed;border:2px dashed #849792;border-radius:16px;color:#526865;padding:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}.slot-label{font-size:.7rem;font-weight:700}.value{font-size:2.2rem;font-weight:800;line-height:1.15}.filled{border-style:solid;background:#e2efeb;color:#203b3b}.selected{outline:3px solid #b64718;outline-offset:3px}.wild-value{font-size:.7rem;max-width:105px;line-height:1.25}.section-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:26px}.subtle{border:0;background:transparent;color:#365e59;text-decoration:underline;padding:10px;border-radius:8px}.hand{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:16px 0}.card-wrap{min-width:0}.card{width:100%;height:125px;border:2px solid #cedbd2;background:#edf3df;border-radius:16px;color:#203b3b;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:9px;box-shadow:0 4px 0 #cad8cd}.card-wrap:nth-child(2n) .card{background:#e4edf5;border-color:#ccd8e3;box-shadow:0 4px 0 #ccd8e3}.card.wild{background:#ffe7b1;border-color:#e5c67f;box-shadow:0 4px 0 #e5c67f}.card strong{font-size:2.8rem}.card.wild strong{font-size:1.1rem}.card small{font-size:.75rem;line-height:1.3;margin-top:6px}.card.used{opacity:.65}.tag{font-size:.65rem;font-weight:700;margin-top:5px}.wild-picker{display:block;font-size:.7rem;margin-top:12px}.wild-picker select{width:100%;padding:6px;border:1px solid #889b94;border-radius:8px;background:white;color:#203b3b;margin-top:4px}.actions{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:26px}.primary{background:#203b3b;color:#fff;border:0;border-radius:12px;padding:14px 22px;font-weight:750;box-shadow:0 4px 0 #102625}.secondary{background:transparent;border:1px solid #879d96;color:#203b3b;border-radius:12px;padding:12px 18px;font-weight:650}#status{min-height:2.8em;font-size:.9rem;color:#365e59;margin:18px 0 0}.note{display:flex;gap:12px;align-items:flex-start;margin:24px 0;color:#526865;font-size:.9rem}.note b{color:#203b3b}footer{display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid #d7ddcf;padding-top:20px;font-size:.8rem;color:#526865}button:hover{filter:brightness(.96)}@media(max-width:560px){main{padding:20px 14px}.board{padding:20px 14px}.hand{gap:10px;grid-template-columns:repeat(3,minmax(0,1fr))}.card{height:108px;padding:5px}.card strong{font-size:2.1rem}.card.wild strong{font-size:.85rem}.card small{font-size:.65rem}.expression{gap:12px}.slot{width:100px;min-height:100px}.actions,footer{flex-direction:column;align-items:stretch}.primary,.secondary{width:100%}.target{padding:12px 18px}.wild-picker{font-size:.65rem}}@media(prefers-reduced-motion:no-preference){button{transition:background .15s,filter .15s}}
+</style>
+</head>
+<body>
+<main>
+<header><div><div class="eyebrow">A little game. A lot to think about.</div><h1>Target One</h1></div><div class="target"><span>TARGET</span><strong>1</strong></div></header>
+<p class="intro" id="instructions"></p>
+<section class="board" aria-labelledby="mode-title">
+<h2 id="mode-title"></h2>
+<p class="hint">Select a card, then select a space. To rearrange, select a filled space and then another space to move or swap.</p>
+<div class="expression" id="expression" role="group" aria-label="Your expression"></div>
+<div class="section-top"><h2>Your five cards</h2><button class="subtle" id="clear" type="button">Clear spaces</button></div>
+<div class="hand" id="hand" role="group" aria-label="Your hand"></div>
+<p id="status" role="status" aria-live="polite" aria-atomic="true"></p>
+<div class="actions"><button class="primary" id="deal" type="button">Deal New Hand</button><button class="secondary" id="cancel" type="button">Cancel selection</button></div>
+</section>
+<div class="note"><span aria-hidden="true">✎</span><div><b>The mathematics is yours.</b> Work with your partner to get as close to 1 as you can. Calculate and record your expression, product, and reasoning on paper or in your course notes.</div></div>
+<footer><span>Take your time. Compare strategies. Explain your thinking.</span><button class="subtle" id="version" type="button">Try a New Version →</button></footer>
+</main>
+<script>
+'use strict';
+(() => {
+  const $ = id => document.getElementById(id);
+  let alternate = false, cards = [], spaces = [], selected = null;
+  const labels = () => alternate ? ['First numerator','First denominator','Second numerator','Second denominator'] : ['Whole number','Numerator','Denominator'];
+  const say = message => { $('status').textContent = message; };
+  const value = card => card.wild ? (card.choice || '?') : card.number;
+  function deal() {
+    // Each numbered value has weight 2; Wild has weight 1 (1 in 15).
+    const deck = [1,1,2,2,3,3,4,4,5,5,6,6,8,8,'wild'];
+    cards = Array.from({length:5}, () => {const draw=deck[Math.floor(Math.random()*deck.length)];return {wild:draw==='wild',number:draw,choice:''};});
+    spaces = Array(alternate ? 4 : 3).fill(null); selected = null;
+    render(); say('New hand dealt. Select a card to begin.');
+  }
+  function slot(index) {
+    const button = document.createElement('button'); button.type='button';button.className='slot';
+    const cardIndex=spaces[index], card=cardIndex===null ? null : cards[cardIndex];
+    if(card) button.classList.add('filled');
+    if(selected && selected.kind==='slot' && selected.index===index) button.classList.add('selected');
+    button.setAttribute('aria-pressed',String(!!selected && selected.kind==='slot' && selected.index===index));
+    button.setAttribute('aria-label',labels()[index]+': '+(card ? (card.wild ? 'Wild, '+(card.choice || 'choose a number') : card.number)+', card '+(cardIndex+1) : 'empty'));
+    const caption=document.createElement('span');caption.className='slot-label';caption.textContent=labels()[index];button.append(caption);
+    const number=document.createElement('span');number.className='value';number.textContent=card ? value(card) : '□';button.append(number);
+    if(card && card.wild){const wild=document.createElement('span');wild.className='wild-value';wild.textContent='WILD! Choose a number 1–6!';button.append(wild);}
+    button.onclick=()=>place(index);return button;
+  }
+  function place(index) {
+    if(!selected){if(spaces[index]===null){say('Select a card first, then choose this space.');return;}selected={kind:'slot',index};render();say(labels()[index]+' selected. Select another space to move or swap, or select its card to return it to the hand.');return;}
+    if(selected.kind==='slot') {
+      const origin=selected.index;
+      [spaces[origin],spaces[index]]=[spaces[index],spaces[origin]];
+    } else {
+      const origin=spaces.indexOf(selected.index);
+      const displaced=spaces[index];spaces[index]=selected.index;
+      if(origin!==-1 && origin!==index) spaces[origin]=displaced;
+    }
+    selected=null;render();say(spaces.every(x=>x!==null) ? 'Your spaces are filled. Calculate and record your product and reasoning; you can still rearrange.' : 'Card placed. Keep building your expression.');
+  }
+  function selectCard(index) {
+    if(selected && (selected.kind==='card' && selected.index===index || selected.kind==='slot' && spaces[selected.index]===index)) {
+      const origin=spaces.indexOf(index);if(origin!==-1) spaces[origin]=null;selected=null;render();say(origin!==-1 ? 'Card returned to the hand.' : 'Selection canceled.');return;
+    }
+    selected={kind:'card',index};render();say('Card '+(index+1)+' selected. Select a space to place it.');
+  }
+  function render() {
+    const activeElement=document.activeElement;
+    const focusedSlot=Array.from($('expression').querySelectorAll('button')).indexOf(activeElement);
+    const focusedCard=Array.from($('hand').querySelectorAll('button')).indexOf(activeElement);
+    $('mode-title').textContent=alternate ? 'Fraction × Fraction: Target 1' : 'Whole Number × Fraction: Target 1';
+    $('instructions').textContent=alternate ? 'Use four of your five cards to build two fractions. Aim for a product as close to 1 as you can.' : 'Use three of your five cards to build a whole number times a fraction. Aim for a product as close to 1 as you can.';
+    $('version').textContent=alternate ? '← Return to Original Version' : 'Try a New Version →';
+    const expression=$('expression');expression.replaceChildren();
+    const fraction=(top,bottom)=>{const group=document.createElement('div');group.className='fraction';const bar=document.createElement('div');bar.className='bar';bar.setAttribute('aria-hidden','true');group.append(slot(top),bar,slot(bottom));return group;};
+    const times=document.createElement('span');times.className='times';times.textContent='×';times.setAttribute('aria-hidden','true');
+    expression.append(alternate ? fraction(0,1) : slot(0),times,alternate ? fraction(2,3) : fraction(1,2));
+    $('hand').replaceChildren();
+    cards.forEach((card,index)=>{
+      const wrap=document.createElement('div');wrap.className='card-wrap';
+      const button=document.createElement('button');button.type='button';button.className='card'+(card.wild ? ' wild' : '');
+      const used=spaces.indexOf(index)!==-1, active=!!selected && (selected.kind==='card' ? selected.index===index : spaces[selected.index]===index);
+      if(used)button.classList.add('used');if(active)button.classList.add('selected');button.setAttribute('aria-pressed',String(active));
+      button.setAttribute('aria-label','Card '+(index+1)+': '+(card.wild ? 'WILD! Choose a number 1–6! '+(card.choice ? 'Chosen '+card.choice+'. ' : '') : card.number+'. ')+(used ? 'In expression.' : 'Available.'));
+      const strong=document.createElement('strong');strong.textContent=card.wild ? 'WILD!' : card.number;button.append(strong);
+      if(card.wild){const small=document.createElement('small');small.textContent='Choose a number 1–6!';button.append(small);}
+      const tag=document.createElement('span');tag.className='tag';tag.textContent=used ? 'IN USE · '+(index+1) : 'CARD '+(index+1);button.append(tag);
+      button.onclick=()=>selectCard(index);wrap.append(button);
+      if(card.wild){const label=document.createElement('label');label.className='wild-picker';label.textContent='Wild number';const select=document.createElement('select');select.setAttribute('aria-label','Choose a number for Wild card '+(index+1));
+        const empty=document.createElement('option');empty.value='';empty.textContent='Choose…';select.append(empty);
+        for(let n=1;n<=6;n++){const option=document.createElement('option');option.value=String(n);option.textContent=String(n);select.append(option);}select.value=card.choice;
+        select.onchange=()=>{card.choice=select.value;render();$('hand').children[index].querySelector('select').focus();say(card.choice ? 'Wild card '+(index+1)+' is now '+card.choice+'.' : 'Choose a number from 1 to 6 for this Wild card.');};label.append(select);wrap.append(label);
+      }
+      $('hand').append(wrap);
+    });
+    if(focusedSlot>=0) $('expression').querySelectorAll('button')[focusedSlot]?.focus();
+    if(focusedCard>=0) $('hand').querySelectorAll('button')[focusedCard]?.focus();
+  }
+  $('deal').onclick=deal;
+  $('clear').onclick=()=>{spaces.fill(null);selected=null;render();say('Spaces cleared. Your hand and Wild choices are unchanged.');};
+  $('cancel').onclick=()=>{selected=null;render();say('Selection canceled.');};
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'){selected=null;render();say('Selection canceled.');$('cancel').focus();}});
+  $('version').onclick=()=>{alternate=!alternate;deal();say('Version changed. New hand dealt.');$('mode-title').setAttribute('tabindex','-1');$('mode-title').focus();};
+  deal();
+})();
+</script>
+</body>
+</html>
+
+
